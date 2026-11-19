@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}{% endblock %}</title>
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #121212;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #1a1a1a;
+      color: #fff;
+      border-bottom: 1px solid #333;
+    }
+
+    nav {
+      background-color: #1a1a1a;
+      height: 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    nav ul li {
+      margin: 0 5px;
+    }
+
+    nav ul li a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 20px 15px;
+      display: block;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li span {
+      color: #e0e0e0;
+      font-size: 16px;
+      padding: 20px 15px;
+      display: block;
+    }
+
+    nav ul li a:hover {
+      background-color: #8b1e1e;
+      color: #fff;
+    }
+
+    nav ul li.active a {
+      background-color: #8b1e1e;
+      color: #fff;
+    }
+
+    nav ul li.active a:hover {
+      background-color: #b52b2b;
+    }
+
+    main {
+      min-height: calc(100vh - 120px);
+    }
+
+    footer {
+      background-color: #1a1a1a;
+      color: #888;
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #333;
+    }
+
+    footer p {
+      margin: 0;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <ul>
+
+        {% if user.is_authenticated %}
+          <li><span>Olá, {{ user.username }}</span></li>
+          <li><a href="{% url 'new_motorcycle' %}">Cadastrar Moto</a></li>
+        {% endif %}
+
+        {% if not user.is_authenticated %}
+          <li><a href="{% url 'register' %}">Cadastre-se</a></li>
+          <li><a href="{% url 'login' %}">Login</a></li>
+        {% endif %}
+
+        <li><a href="{% url 'motorcycles_list' %}">Motos</a></li>
+
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}">Sair</a></li>
+        {% endif %}
+
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; 2026 - Motos Custom</p>
+  </footer>
+
+</body>
+</html>
